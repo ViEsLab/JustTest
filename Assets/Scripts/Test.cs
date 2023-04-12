@@ -11,12 +11,38 @@ public class Test : MonoBehaviour {
     public GameObject signedAngleTest_mainGo;
     public GameObject signedAngleTest_viceGo;
     public Actor actor;
+    public Transform getChildTestTrans;
 
     void Start() {
-        IpParseTest();
+        GetChildTest();
     }
 
     void Update() {
+    }
+
+    private void GetChildTest() {
+        int count = getChildTestTrans.childCount;
+        for (int i = 0; i < count; i++) {
+            Transform curChild = getChildTestTrans.GetChild(i);
+            if (curChild.name.EndsWith("@Skin")) {
+                Debug.Log(curChild.name);
+                break;
+            }
+        }
+    }
+
+    private void NumberTest() {
+        Debug.Log(Convert.ToString(Int32.MaxValue, 2));
+        Debug.Log(Convert.ToString(-1, 2));
+    }
+
+    private void NegativeToBinary() {
+        long test = long.MaxValue;
+        Debug.Log(Convert.ToString(test, 2));
+        test >>= 7;
+        Debug.Log(Convert.ToString(test, 2));
+        test = ~test;
+        Debug.Log(Convert.ToString(test, 2));
     }
 
     private void IpParseTest() {
