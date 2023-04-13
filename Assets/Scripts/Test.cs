@@ -4,7 +4,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using System.Text;
+using Spring;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class Test : MonoBehaviour {
     public GameObject lookAtTarget;
@@ -13,11 +15,27 @@ public class Test : MonoBehaviour {
     public Actor actor;
     public Transform getChildTestTrans;
 
+    public ComponentAccessTarget componentTargetTarget;
+    public int componentTestFrame = 120;
+
     void Start() {
-        GetChildTest();
     }
 
     void Update() {
+        ComponentAccessTest();
+    }
+
+    private void ComponentAccessTest() {
+        if (componentTestFrame < 0) {
+            Debug.Log(componentTargetTarget.test);
+        }
+
+        if (componentTestFrame == 60) {
+            Destroy(componentTargetTarget.gameObject);
+            Debug.Log("[ViE] 销毁！");
+        }
+
+        componentTestFrame--;
     }
 
     private void GetChildTest() {
