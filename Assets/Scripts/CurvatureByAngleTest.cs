@@ -26,7 +26,7 @@ namespace Spring {
             Vector3 fst = startPoint.transform.position - curPos;
             Vector3 snd = endPoint.transform.position - curPos;
 
-            Vector3 foot = GetFootOfPerpendicular(curPos, fst, snd);
+            Vector3 foot = GetFootOfPerpendicular(curPos, startPoint.transform.position, endPoint.transform.position);
             curPoint.transform.up = -foot;
         }
 

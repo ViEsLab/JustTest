@@ -8,21 +8,60 @@ using Spring;
 using UnityEngine;
 using UnityEngine.Serialization;
 
+public class TestObj {
+    public int test;
+}
+
 public class Test : MonoBehaviour {
     public GameObject lookAtTarget;
     public GameObject signedAngleTest_mainGo;
     public GameObject signedAngleTest_viceGo;
     public Actor actor;
     public Transform getChildTestTrans;
+    public TestObj nullObj;
 
     public ComponentAccessTarget componentTargetTarget;
     public int componentTestFrame = 120;
 
     void Start() {
+        EqualsTest();
     }
 
     void Update() {
-        ComponentAccessTest();
+    }
+
+    private void EqualsTest() {
+        float floatTest = 1;
+        long longTest = 1;
+        int intTest = 1;
+        Debug.Log(floatTest.Equals(longTest));
+        // Warning: "Suspicious comparison: there is no type in the solution which is inherited from both 'long' and 'float'"
+        Debug.Log(longTest.Equals(floatTest));
+        Debug.Log(longTest.Equals(intTest));
+
+        // How to judge an object is value type
+        Type type = floatTest.GetType();
+        if (type.IsValueType) {
+            // ...
+        }
+    }
+
+    private void ArrayAddTest() {
+        int[] test = Array.Empty<int>();
+        test[0] = 0;
+        test[1] = 1;
+    }
+
+    private void RecycleObjectUpdate() {
+        Debug.Log(componentTargetTarget == null);
+        Debug.Log(object.ReferenceEquals(componentTargetTarget, null));
+        componentTargetTarget?.gameObject.SetActive(false);
+        // Debug.Log(nullObj.test);
+    }
+
+    private void RecycleObjectStart() {
+        Debug.Log(componentTargetTarget == null);
+        Destroy(componentTargetTarget.gameObject);
     }
 
     private void ComponentAccessTest() {

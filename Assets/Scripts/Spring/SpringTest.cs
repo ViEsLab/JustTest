@@ -15,8 +15,9 @@ namespace Spring {
                 // curPos, v, targetPos, 1f, Time.deltaTime,
                 // out Vector3 posResult, out Vector3 velocityResult);
 
+            float offset = Vector3.Distance(curPos, targetPos);
             Vector3 posResult = SpringInterpolation.DamperExactFast(
-                curPos, targetPos, 0.1f, Time.deltaTime);
+                curPos, targetPos, Mathf.Min(0.3f / offset, 0.05f), Time.deltaTime);
 
             this.transform.position = posResult;
             this.prePos = curPos;
