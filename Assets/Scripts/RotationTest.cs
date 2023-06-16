@@ -18,23 +18,25 @@ public class RotationTest : MonoBehaviour {
     void Update() {
         endPointVec.SetPosition(1, endPointGo.transform.position.normalized);
 
-        // NewRotationFunc();
-        OldRotationFunc();
+        RotationByNewCoordinateSystem();
     }
 
-    public void NewRotationFunc() {
-        Vector3 oriPos = controlPointVec.GetPosition(1);
-        float dis = Vector3.Distance(oriPos, Vector3.zero);
-        Quaternion turn = Quaternion.identity;
-            turn = FromToRotation(Vector3.forward, endPointGo.transform.position.normalized);
-        realResult.SetPosition(1, dis * (turn * oriPos.normalized));
-    }
+    public void RotationByNewCoordinateSystem() {
+        // 建立新坐标系
+        Vector3 newForward = endPointGo.transform.position - this.transform.position;
+        Vector3 newRight = Vector3.zero;
+        newRight = Mathf.Abs(Vector3.Dot(newForward, Vector3.up) - 1) <= float.Epsilon ?
+            Vector3.right :
+            Vector3.Cross(Vector3.up, newForward).normalized;
+        Vector3 newUp = Vector3.Cross(newForward, newRight).normalized;
 
-    public void OldRotationFunc() {
+        // 根据新坐标系在各个基向量上做偏移
         Vector3 oriPos = controlPointVec.GetPosition(1);
-        float dis = Vector3.Distance(oriPos, Vector3.zero);
-        Quaternion turn = FromToRotation(Vector3.forward, oriPos.normalized);
-        realResult.SetPosition(1, dis * (turn * endPointGo.transform.position.normalized));
+        Vector3 newPos = this.transform.position +
+                         oriPos.x * newRight +
+                         oriPos.y * newUp +
+                         oriPos.z * newForward;
+        realResult.SetPosition(1, newPos);
     }
 
     public Quaternion FromToRotation(Vector3 dir1, Vector3 dir2) {
