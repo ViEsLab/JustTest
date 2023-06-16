@@ -19,6 +19,7 @@ public class Test : MonoBehaviour {
     public Actor actor;
     public Transform getChildTestTrans;
     public TestObj nullObj;
+    public float angle = 0;
 
     public ComponentAccessTarget componentTargetTarget;
     public int componentTestFrame = 120;
@@ -28,6 +29,15 @@ public class Test : MonoBehaviour {
     }
 
     void Update() {
+        NullCompTest();
+    }
+
+    private void NullCompTest() {
+        Debug.Log(GetComponentsInChildren<Rigidbody>().Length);
+    }
+
+    private void GetDirByAngle() {
+        Debug.Log(Quaternion.AngleAxis(angle, Vector3.up) * new Vector3(1, 0, 1));
     }
 
     private void EqualsTest() {
