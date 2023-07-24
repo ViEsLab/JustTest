@@ -17,6 +17,8 @@ namespace Editor {
         private List<int> subWindowKeyList = new List<int>();
         private List<Rect> subWindowRectList = new List<Rect>();
         private int windowCount = 0;
+        private bool isOneOpen = false;
+        private bool isTwoOpen = false;
 
         private void OnEnable() {
             nextWindowId = 0;
@@ -31,6 +33,20 @@ namespace Editor {
         }
 
         private void OnGUI() {
+            isOneOpen = EditorGUILayout.Foldout(isOneOpen, "FOLD1");
+            if (isOneOpen) {
+                EditorGUI.indentLevel++;
+                GUILayout.Box("1", GUILayout.Height(100));
+                isTwoOpen = EditorGUILayout.Foldout(isTwoOpen, "FOLD2");
+                if (isTwoOpen) {
+                    EditorGUI.indentLevel++;
+                    GUILayout.Box("3", GUILayout.Height(100));
+                    EditorGUI.indentLevel--;
+                }
+                EditorGUI.indentLevel--;
+            }
+            GUILayout.Box("2", GUILayout.Height(50));
+
             BeginWindows();
             for (int i = 0; i < windowCount; i++) {
                 subWindowRectList[i] = GUILayout.Window(subWindowKeyList[i], subWindowRectList[i], Yeah, $"ViE{subWindowKeyList[i]}");
