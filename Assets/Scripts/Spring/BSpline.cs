@@ -78,13 +78,15 @@ namespace Campfire.Battle.Visual {
         private Vector3 CreateBSpline(float rate) {
             int step = 0;
 
+            // 确定片段起点
             for (int i = k; rate > nodeVector[i]; i++, step++);
-
+            // 抽出控制点
             for (int i = 0; i < k; i++) {
                 fragments[i] = controlPoints[step + i];
             }
-
+            // 从高阶开始，便于将控制点直接纳入计算
             for (int j = k; j > 1; j--) {
+                // 遍历参与插值的点
                 for (int i = 0; i < k - 1; i++) {
                     Vector3 left = fragments[i];
                     Vector3 right = fragments[i + 1];
