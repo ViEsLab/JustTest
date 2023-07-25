@@ -37,21 +37,24 @@ namespace Editor {
             isOneOpen = EditorGUILayout.Foldout(isOneOpen, "FOLD1");
             if (isOneOpen) {
                 EditorGUI.indentLevel++;
-                GUILayout.Box("1", GUILayout.Height(100));
+                GUILayout.BeginHorizontal();
+                GUILayout.Space(EditorGUI.indentLevel * 15);
+                GUILayout.Box("1", GUILayout.Height(25));
+                GUILayout.EndHorizontal();
                 isTwoOpen = EditorGUILayout.Foldout(isTwoOpen, "FOLD2");
                 if (isTwoOpen) {
                     EditorGUI.indentLevel++;
 
                     GUILayout.BeginHorizontal();
-                    GUILayout.Space(30);
-                    GUILayout.Box("3", GUILayout.Height(50));
+                    GUILayout.Space(EditorGUI.indentLevel * 15);
+                    GUILayout.Box("3", GUILayout.Height(25));
                     GUILayout.EndHorizontal();
                     isThreeOpen = EditorGUILayout.Foldout(isThreeOpen, "FOLD3");
                     if (isThreeOpen) {
                         EditorGUI.indentLevel++;
 
                         GUILayout.BeginHorizontal();
-                        GUILayout.Space(30 * 2);
+                        GUILayout.Space(EditorGUI.indentLevel * 15);
                         GUILayout.Box("5", GUILayout.Height(25));
                         GUILayout.EndHorizontal();
 
@@ -59,8 +62,8 @@ namespace Editor {
                     }
 
                     GUILayout.BeginHorizontal();
-                    GUILayout.Space(30);
-                    GUILayout.Box("4", GUILayout.Height(50));
+                    GUILayout.Space(EditorGUI.indentLevel * 15);
+                    GUILayout.Box("4", GUILayout.Height(25));
                     GUILayout.EndHorizontal();
 
                     EditorGUI.indentLevel--;
