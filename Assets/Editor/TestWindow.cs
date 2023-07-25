@@ -19,6 +19,7 @@ namespace Editor {
         private int windowCount = 0;
         private bool isOneOpen = false;
         private bool isTwoOpen = false;
+        private bool isThreeOpen = false;
 
         private void OnEnable() {
             nextWindowId = 0;
@@ -40,12 +41,33 @@ namespace Editor {
                 isTwoOpen = EditorGUILayout.Foldout(isTwoOpen, "FOLD2");
                 if (isTwoOpen) {
                     EditorGUI.indentLevel++;
-                    GUILayout.Box("3", GUILayout.Height(100));
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(30);
+                    GUILayout.Box("3", GUILayout.Height(50));
+                    GUILayout.EndHorizontal();
+                    isThreeOpen = EditorGUILayout.Foldout(isThreeOpen, "FOLD3");
+                    if (isThreeOpen) {
+                        EditorGUI.indentLevel++;
+
+                        GUILayout.BeginHorizontal();
+                        GUILayout.Space(30 * 2);
+                        GUILayout.Box("5", GUILayout.Height(25));
+                        GUILayout.EndHorizontal();
+
+                        EditorGUI.indentLevel--;
+                    }
+
+                    GUILayout.BeginHorizontal();
+                    GUILayout.Space(30);
+                    GUILayout.Box("4", GUILayout.Height(50));
+                    GUILayout.EndHorizontal();
+
                     EditorGUI.indentLevel--;
                 }
                 EditorGUI.indentLevel--;
             }
-            GUILayout.Box("2", GUILayout.Height(50));
+            GUILayout.Box("2", GUILayout.Height(100));
 
             BeginWindows();
             for (int i = 0; i < windowCount; i++) {
