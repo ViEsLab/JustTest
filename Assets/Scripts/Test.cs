@@ -2,7 +2,9 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
+using System.Net.NetworkInformation;
 using System.Text;
 using Spring;
 using UnityEngine;
@@ -25,11 +27,30 @@ public class Test : MonoBehaviour {
     public int componentTestFrame = 120;
 
     void Start() {
-        EqualsTest();
     }
 
     void Update() {
-        NullCompTest();
+        GetOpenPortTest();
+    }
+
+    private void GetOpenPortTest() {
+        int portStartIndex = 50051;
+        int portEndIndex = 51051;
+
+        IPGlobalProperties properties = IPGlobalProperties.GetIPGlobalProperties();
+        IPEndPoint[] tcpEndPoints = properties.GetActiveTcpListeners();
+
+        List<int> usedPorts = tcpEndPoints.Select(p => p.Port).ToList();
+        int unusedPort = 0;
+
+        for (int port = portStartIndex; port < portEndIndex; port++) {
+            if (!usedPorts.Contains(port)) {
+                unusedPort = port;
+                break;
+            }
+        }
+
+        Debug.Log(unusedPort.ToString());
     }
 
     private void NullCompTest() {
