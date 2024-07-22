@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.NetworkInformation;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using Spring;
 using UnityEngine;
@@ -12,6 +14,13 @@ using UnityEngine.Serialization;
 
 public class TestObj {
     public int test;
+}
+
+[Serializable]
+public struct SerializeTestStruct {
+    public int a;
+    public bool b;
+    public string c;
 }
 
 public class Test : MonoBehaviour {
@@ -27,10 +36,31 @@ public class Test : MonoBehaviour {
     public int componentTestFrame = 120;
 
     void Start() {
+        TypeTest();
     }
 
     void Update() {
-        GetOpenPortTest();
+    }
+
+    private void TypeTest() {
+        Type intType = typeof(int);
+        Debug.Log($"FullName: {intType.FullName}    Name: {intType.Name}");
+        Debug.Log($"Size: {Marshal.SizeOf(intType)}");
+    }
+
+    private void MemoryStreamTest() {
+        SerializeTestStruct test = new SerializeTestStruct() {
+            a = 1,
+            b = true,
+            c = "ViE here!",
+        };
+
+        using (MemoryStream memStream = new MemoryStream(100)) {
+            BinaryFormatter formatter = new BinaryFormatter();
+            formatter.Serialize(memStream, test);
+
+            Debug.Log(BitConverter.ToString(memStream.GetBuffer()));
+        }
     }
 
     private void GetOpenPortTest() {
