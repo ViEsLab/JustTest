@@ -47,4 +47,19 @@ public class SequenceTest : MonoBehaviour  {
 
         return new Vector2(x, y);
     }
+
+    private static float HaltonSequence(int index, int b) {
+        float res = 0f;
+        float f = 1f / b;
+
+        int i = index;
+
+        while (i > 0) {
+            res = res + f * (i % b);
+            i = Mathf.FloorToInt(i / b);
+            f = f / b;
+        }
+
+        return res;
+    }
 }
